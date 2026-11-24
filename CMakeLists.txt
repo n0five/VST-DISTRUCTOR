@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(PsykoticDist VERSION 0.1.0)
+project(PsykoticDist VERSION 0.2.0)
 
 include(FetchContent)
 FetchContent_Declare(JUCE
@@ -8,18 +8,22 @@ FetchContent_Declare(JUCE
     GIT_SHALLOW TRUE)
 FetchContent_MakeAvailable(JUCE)
 
+# Le nom de la cible reste "PsykoticDist" pour que le workflow GitHub existant
+# continue de marcher sans modification. Le plugin s'appelle bien "Drank".
 juce_add_plugin(PsykoticDist
     COMPANY_NAME "Perso"
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
     PLUGIN_MANUFACTURER_CODE Pers
-    PLUGIN_CODE Psyk
+    PLUGIN_CODE Drnk
     FORMATS VST3 Standalone
-    PRODUCT_NAME "PSYKOTIC Dist"
+    PRODUCT_NAME "Drank"
     COPY_PLUGIN_AFTER_BUILD FALSE)
 
-target_sources(PsykoticDist PRIVATE PluginProcessor.cpp)
+target_sources(PsykoticDist PRIVATE
+    PluginProcessor.cpp
+    PluginEditor.cpp)
 
 target_compile_definitions(PsykoticDist PUBLIC
     JUCE_WEB_BROWSER=0
@@ -32,5 +36,4 @@ target_link_libraries(PsykoticDist
         juce::juce_dsp
     PUBLIC
         juce::juce_recommended_config_flags
-        juce::juce_recommended_lib_flags
         juce::juce_recommended_warning_flags)
