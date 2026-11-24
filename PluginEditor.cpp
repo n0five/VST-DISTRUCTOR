@@ -62,7 +62,6 @@ DrankEditor::DrankEditor (DrankAudioProcessor& p)
     : AudioProcessorEditor (&p), proc (p)
 {
     setLookAndFeel (&lnf);
-    setSize (760, 500);
 
     const char* ids[]   = { "drive", "hard", "fold", "bias", "rate", "bits",
                             "muffle", "wobble", "room", "out", "mix" };
@@ -104,6 +103,7 @@ DrankEditor::DrankEditor (DrankAudioProcessor& p)
                              rnd.nextFloat() * 6.28f });
 
     startTimerHz (24);
+    setSize (760, 500);   // en dernier : resized() a besoin que les potards existent
 }
 
 DrankEditor::~DrankEditor()
@@ -242,6 +242,8 @@ void DrankEditor::paint (Graphics& g)
 
 void DrankEditor::resized()
 {
+    if (knobs.size() < 11) return;
+
     prevBtn.setBounds (440, 30, 30, 30);
     presetBox.setBounds (476, 30, 220, 30);
     nextBtn.setBounds (702, 30, 34, 30);
